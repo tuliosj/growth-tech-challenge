@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Person, Business, Description } from "@material-ui/icons";
+import { Business } from "@material-ui/icons";
 import api from "../../services/api";
 import Header from "../../components/Header";
 import Browser from "../../components/Browser";
 import { IListItem } from "../../components/Browser/types";
 import { Company } from "./types";
-import { RouteComponentProps } from "react-router-dom";
 
-const Home = (props: RouteComponentProps) => {
+const Home = () => {
   const [items, setItems] = useState<IListItem[]>([]);
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const Home = (props: RouteComponentProps) => {
             id: company.id,
             primary: company.name,
             secondary: company.catchPhrase,
-            link: `/empresas?id=${company.id}`,
+            link: `/empresas?name=${company.name}`,
           };
         })
       );
@@ -26,7 +25,7 @@ const Home = (props: RouteComponentProps) => {
   }, []);
 
   return (
-    <Header title="Empresas">
+    <Header title="Empresas" goBack={false}>
       <Browser Icon={Business} items={items} />
     </Header>
   );

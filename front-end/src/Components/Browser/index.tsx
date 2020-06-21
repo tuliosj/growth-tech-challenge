@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   List,
   ListItem,
@@ -10,7 +10,11 @@ import {
   SvgIconTypeMap,
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
-import { ArrowForward as ForwardIcon } from "@material-ui/icons";
+import {
+  ArrowForward as ForwardIcon,
+  ExpandMore,
+  ExpandLess,
+} from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { IListItem } from "./types";
 import useStyles from "./styles";
@@ -23,6 +27,16 @@ interface Props {
 
 const Browser: React.FC<Props> = ({ Icon, items }) => {
   const classes = useStyles(useTheme());
+  const [toggle, setToggle] = useState(-1);
+
+  const handleToggle = (id: number) => {
+    if (toggle === id) {
+      setToggle(-1);
+    } else {
+      setToggle(id);
+    }
+  };
+
   return (
     <List className={classes.list}>
       {items.map((item) => (
@@ -32,13 +46,32 @@ const Browser: React.FC<Props> = ({ Icon, items }) => {
               <Icon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={item.primary} secondary={item.secondary} />
+          <ListItemText
+            primary={item.primary}
+            secondary={
+              item.link !== "" || toggle === item.id ? item.secondary : ""
+            }
+          />
           <ListItemSecondaryAction>
-            <Link to={item.link}>
-              <IconButton edge="end" aria-label="access">
-                <ForwardIcon className={classes.secondaryColor} />
+            {item.link !== "" ? (
+              <Link to={item.link}>
+                <IconButton edge="end" aria-label="access">
+                  <ForwardIcon className={classes.secondaryColor} />
+                </IconButton>
+              </Link>
+            ) : (
+              <IconButton
+                edge="end"
+                aria-label="access"
+                onClick={() => handleToggle(item.id)}
+              >
+                {toggle === item.id ? (
+                  <ExpandLess className={classes.secondaryColor} />
+                ) : (
+                  <ExpandMore className={classes.secondaryColor} />
+                )}
               </IconButton>
-            </Link>
+            )}
           </ListItemSecondaryAction>
         </ListItem>
       ))}

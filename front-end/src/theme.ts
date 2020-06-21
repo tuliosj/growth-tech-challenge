@@ -12,6 +12,11 @@ const theme = createMuiTheme({
         color: palette.primary.dark,
       },
     },
+    MuiAvatar: {
+      colorDefault: {
+        color: palette.background.paper,
+      },
+    },
   },
 });
 

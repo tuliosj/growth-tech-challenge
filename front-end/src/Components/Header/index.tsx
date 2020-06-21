@@ -8,16 +8,21 @@ import { IProps } from "./types";
 const Header: React.FC<IProps> = (props: IProps) => {
   const history = useHistory();
 
+  const { goBack = true } = props;
+
   return (
     <>
       <TitleBox>
-        <IconButton
-          onClick={() => {
-            history.goBack();
-          }}
-        >
-          <ArrowBack />
-        </IconButton>
+        {goBack && (
+          <IconButton
+            onClick={() => {
+              history.goBack();
+            }}
+          >
+            <ArrowBack />
+          </IconButton>
+        )}
+
         <Title variant="h1">{props.title}</Title>
       </TitleBox>
       <Container>{props.children}</Container>
