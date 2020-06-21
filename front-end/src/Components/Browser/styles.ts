@@ -2,16 +2,15 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      backgroundColor: theme.palette.secondary.light,
-      flexGrow: 1,
-      maxWidth: 752,
-    },
-    demo: {
+    list: {
       backgroundColor: theme.palette.background.paper,
+      borderRadius: "0.5rem",
     },
-    title: {
-      margin: theme.spacing(4, 0, 2),
+    secondaryColor: {
+      color: theme.palette.secondary.dark,
+    },
+    secondaryBackground: {
+      backgroundColor: theme.palette.secondary.dark,
     },
   })
 );

@@ -1,16 +1,34 @@
-import React from "react";
-import { useTheme } from "@material-ui/core/styles";
-import Browser from "../../Components/Browser";
+import React, { useEffect, useState } from "react";
 import { Person, Business, Description } from "@material-ui/icons";
+import api from "../../services/api";
+import Header from "../../components/Header";
+import Browser from "../../components/Browser";
+import { IListItem } from "../../components/Browser/types";
+import { Company } from "./types";
+import { RouteComponentProps } from "react-router-dom";
 
-import useStyles from "./styles";
+const Home = (props: RouteComponentProps) => {
+  const [items, setItems] = useState<IListItem[]>([]);
 
-const Home = () => {
+  useEffect(() => {
+    api.get("empresas").then((res) => {
+      setItems(
+        res.data.map((company: Company) => {
+          return {
+            id: company.id,
+            primary: company.name,
+            secondary: company.catchPhrase,
+            link: `/empresas?id=${company.id}`,
+          };
+        })
+      );
+    });
+  }, []);
+
   return (
-    <Browser
-      Icon={Person}
-      items={[{ id: 1, primary: "a", secondary: "b", link: "c" }]}
-    />
+    <Header title="Empresas">
+      <Browser Icon={Business} items={items} />
+    </Header>
   );
 };
 

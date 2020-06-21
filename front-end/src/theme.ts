@@ -1,7 +1,18 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
+import paletteTheme from "./palette";
+
+const palette = paletteTheme.palette;
+
 const theme = createMuiTheme({
-  palette: { primary: { main: "#142850" }, secondary: { main: "#00909e" } },
+  palette: palette,
+  overrides: {
+    MuiListItemText: {
+      primary: {
+        color: palette.primary.dark,
+      },
+    },
+  },
 });
 
 export default theme;
